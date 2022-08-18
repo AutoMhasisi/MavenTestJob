@@ -1,0 +1,15 @@
+Do all client administrators have the same functions?
+If not, what are the different levels?
+What type of licence does each level get?
+What do these different licences allow?
+How are administrators going get/request these licences?
+Is there an approval required or they automatically get them?
+If there approval, who approves and how?
+What is the format of the licence?
+How do administrators use or upload the licence to get the required rights?
+Do the licences expire? After how long?
+After expiry, what is the process of getting a licence again?
+If there is misuse, can a licence be deactivated? How? By who?
+If a licence has issues, who are administrators going to contact for support? 
+Would the request be through the licence feature?
+
