@@ -7,9 +7,14 @@ import org.testng.annotations.BeforeMethod;
 
 import static org.testng.Assert.assertEquals;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -28,8 +33,11 @@ public class option_2 {
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.get("https://www.saucedemo.com/");
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebDriverWait wait = new WebDriverWait (driver, Duration.ofSeconds(10));
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
+		
 		
 		//ImplicitlyWait
 		//PageLoadTimeOut
@@ -40,11 +48,12 @@ public class option_2 {
 
 	
 	@Test(priority=1)
-	public void buyItems()
+	public void buyItems() throws InterruptedException
 	
 	{
+		
 		addToCart();
-		/*//adding items to cart
+		/*/adding items to cart
 		driver.findElement(By.xpath("//*[@id=\"add-to-cart-sauce-labs-backpack\"]")).click();
 		driver.findElement(By.name("add-to-cart-sauce-labs-bolt-t-shirt")).click();
 		
@@ -62,14 +71,17 @@ public class option_2 {
 	
 	}
 	
-	@Test(dependsOnMethods = {"buyItems"})
-	public void checkout()
+	@Test(priority =2, dependsOnMethods = {"buyItems"})
+	public void checkout() throws InterruptedException
 	{
 	
+		
 		addToCart();
+		
+		
 		verifyOrder();
 		
-/*//entering checkout information
+		/*/entering checkout information
 	driver.findElement(By.id("first-name")).sendKeys("Nonte");
 	driver.findElement(By.name("lastName")).sendKeys("Mtshingila");
 	driver.findElement(By.id("postal-code")).sendKeys("0158");
@@ -78,23 +90,34 @@ public class option_2 {
 	}
 	
 	
-	@Test (dependsOnMethods = {"checkout"})
-	void checkoutOverview()
+	@Test (priority=3, dependsOnMethods = {"checkout"})
+	void checkoutOverview() throws InterruptedException
 	{
+		
 		addToCart();
+		
+		
 		verifyOrder();
+		
+		
 		validateTotal();
+		Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"header_container\"]/div[2]/span")).getText(), "CHECKOUT: OVERVIEW");
 		
 	}
 	
-	@Test (priority=3)
+	/*@Test (priority=4)
 	void orderComplete()
 	{
+		
 		addToCart();
+		
+	
 		verifyOrder();
+		
+		
 		validateTotal();
 		Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"header_container\"]/div[2]/span")).getText(), "CHECKOUT: OVERVIEW");
-	}
+	}*/
 
 	
 	@AfterMethod
@@ -135,8 +158,9 @@ public class option_2 {
 		
 		//validating cart items
 		Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"item_4_title_link\"]/div")).getText(), "Sauce Labs Backpack");
-		Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"item_1_title_link\"]/div")).getText(), "Sauce Labs Bolt T-Shirt");
 		
+		Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"item_1_title_link\"]/div")).getText(), "Sauce Labs Bolt T-Shirt");
+	
 		//clicking checkout button
 		driver.findElement(By.id("checkout")).click();
 	}
@@ -154,10 +178,10 @@ public class option_2 {
 	public void validateTotal()
 	{
 
-		String price1 = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[1]/div[4]/div[2]/div[2]/div")).getText();
+		String price1 = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[1]/div[3]/div[2]/div[2]/div")).getText();
 		String price2 = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[1]/div[4]/div[2]/div[2]/div")).getText();
 		String price3 = driver.findElement(By.xpath("//*[@id=\"checkout_summary_container\"]/div/div[2]/div[5]")).getText();
-
+		
 		System.out.println(price1);
 		System.out.println(price2);
 		System.out.println(price3);

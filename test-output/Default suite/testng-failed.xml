@@ -6,8 +6,10 @@
       <class name="assessment.option_2">
         <methods>
           <include name="tearDown"/>
-          <include name="orderComplete"/>
+          <include name="checkoutOverview"/>
+          <include name="buyItems"/>
           <include name="setUp"/>
+          <include name="checkout"/>
         </methods>
       </class> <!-- assessment.option_2 -->
     </classes>
